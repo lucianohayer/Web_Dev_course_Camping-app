@@ -7,12 +7,14 @@ var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
 //Declare Mongoose
-console.log(process.env.DATABASE);
 var mongoose = require('mongoose');
 //mongoose.connect("mongodb://localhost/yelp_camp");
-var url = process.env.DATABASE || "mongodb://localhost/yelp_camp"
-mongoose.connect(url);
+//var url = process.env.DATABASE || "mongodb://localhost/yelp_camp"
+//mongoose.connect(url);
 
+
+var uriConnect = process.env.DATABASE || "mongodb://localhost/yelp_camp"
+mongoose.connect(uriConnect, { useMongoClient: true });
 
 
 //Declare Flash 
@@ -73,12 +75,12 @@ app.use("/", indexRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes);
 
-//app.listen(process.env.PORT, process.env.IP, function(){
-//    console.log('The Yelp Camp server has started ..');
-//});
-app.listen(3000, function() {
-  console.log('Server running on port 3000');
+app.listen(process.env.PORT, process.env.IP, function(){
+    console.log('The Yelp Camp server has started ..');
 });
+//app.listen(3000, function() {
+//  console.log('Server running on port 3000');
+//});
 
 
     
